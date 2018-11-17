@@ -1,0 +1,36 @@
+{
+  "name": "purescript-bucketchain",
+  "license": "MIT",
+  "homepage": "https://github.com/Bucketchain/purescript-bucketchain",
+  "authors": [
+    "Shinya Takahashi <s.takahashi313@gmail.com>"
+  ],
+  "description": "A PureScript webserver interface based on asyncronous middlewares.",
+  "keywords": [
+    "purescript",
+    "webserver"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Bucketchain/purescript-bucketchain.git"
+  },
+  "moduleType": [
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-node-http": "^5.0.0",
+    "purescript-node-streams": "^4.0.0",
+    "purescript-transformers": "^4.1.0",
+    "purescript-aff": "^5.0.2",
+    "purescript-console": "^4.2.0"
+  },
+  "devDependencies": {
+    "purescript-node-fs": "^5.0.0"
+  }
+}
