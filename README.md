@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png?raw=true" alt="Bucketchain"/>
+  <img src="logo.png?raw=true" alt="Bucketchain" width="150" />
 </p>
 
 # purescript-bucketchain
