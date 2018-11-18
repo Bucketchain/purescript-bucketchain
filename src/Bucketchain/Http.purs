@@ -16,15 +16,12 @@ module Bucketchain.Http
 
 import Prelude
 
-import Data.Either (Either(..))
+import Bucketchain.Stream (convertToString)
 import Effect (Effect)
-import Effect.Aff (Aff, Canceler, makeAff, nonCanceler)
-import Effect.Exception (Error)
-import Effect.Ref (modify_, new, read)
+import Effect.Aff (Aff)
 import Foreign.Object (Object)
-import Node.Encoding (Encoding(..))
 import Node.HTTP as HTTP
-import Node.Stream (Readable, Writable, onDataString, onEnd, onError)
+import Node.Stream (Readable, Writable)
 
 -- | The type of a HTTP stream.
 newtype Http = Http
@@ -54,7 +51,7 @@ requestURL (Http { req }) = HTTP.requestURL req
 
 -- | Get the request body.
 requestBody :: Http -> Aff String
-requestBody http = makeAff $ requestBodyImpl http
+requestBody http = convertToString $ toReadable http
 
 -- | Convert a Http stream to a Readable stream.
 toReadable :: Http -> Readable ()
@@ -79,12 +76,3 @@ setStatusMessage (Http { res }) = HTTP.setStatusMessage res
 -- | This is for internal. Do not use it.
 toWritable :: Http -> Writable ()
 toWritable (Http { res }) = HTTP.responseAsStream res
-
-requestBodyImpl :: Http -> (Either Error String -> Effect Unit) -> Effect Canceler
-requestBodyImpl http cb = do
-  let readable = toReadable http
-  ref <- new ""
-  onDataString readable UTF8 \chunk -> modify_ (flip append chunk) ref
-  onError readable \err -> cb $ Left err
-  onEnd readable $ Right <$> read ref >>= cb
-  pure nonCanceler
