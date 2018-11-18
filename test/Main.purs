@@ -3,6 +3,7 @@ module Test.Main where
 import Prelude
 
 import Bucketchain.Stream (convertToString)
+import Bucketchain.Test (request, requestWithBody)
 import Data.Either (Either(..))
 import Data.Maybe (Maybe(..))
 import Data.Options ((:=))
@@ -17,7 +18,6 @@ import Node.FS.Stream (createReadStream)
 import Node.HTTP (Server, listen, close)
 import Node.HTTP.Client as C
 import Test.Assert (assert)
-import Test.Util as Util
 
 main :: Effect Unit
 main = do
@@ -43,7 +43,7 @@ handleAff s _ = close s $ pure unit
 
 testMiddleware1 :: Aff Unit
 testMiddleware1 = do
-  res <- Util.request opts
+  res <- request opts
   body <- convertToString $ C.responseAsStream res
   liftEffect do
     assert $ body == "Hello world :)"
@@ -58,7 +58,7 @@ testMiddleware1 = do
 
 testMiddleware2 :: Aff Unit
 testMiddleware2 = do
-  res <- Util.requestWithBody opts "TEST BODY"
+  res <- requestWithBody opts "TEST BODY"
   body <- convertToString $ C.responseAsStream res
   liftEffect do
     assert $ body == "TEST BODY"
@@ -73,7 +73,7 @@ testMiddleware2 = do
 
 testMiddleware3 :: Aff Unit
 testMiddleware3 = do
-  res <- Util.request opts
+  res <- request opts
   imgStream <- liftEffect $ createReadStream "example/300x300.png"
   expected <- convertToString imgStream
   body <- convertToString $ C.responseAsStream res
@@ -90,7 +90,7 @@ testMiddleware3 = do
 
 testMiddleware4 :: Aff Unit
 testMiddleware4 = do
-  res <- Util.request opts
+  res <- request opts
   liftEffect $ assert $ C.statusCode res == 500
   where
     opts = C.port := 3000
@@ -99,7 +99,7 @@ testMiddleware4 = do
 
 test404 :: Aff Unit
 test404 = do
-  res <- Util.request opts
+  res <- request opts
   liftEffect $ assert $ C.statusCode res == 404
   where
     opts = C.port := 3000
