@@ -1,5 +1,6 @@
 module Bucketchain.Http
   ( Http
+  , toRequest
   , httpStream
   , httpVersion
   , requestHeaders
@@ -29,50 +30,57 @@ newtype Http = Http
   , res :: HTTP.Response
   }
 
+-- | Convert a HTTP stream to a Request stream.
+toRequest :: Http -> HTTP.Request
+toRequest (Http { req }) = req
+
+toResponse :: Http -> HTTP.Response
+toResponse (Http { res }) = res
+
 -- | Create a HTTP stream.
 httpStream :: HTTP.Request -> HTTP.Response -> Http
 httpStream req res = Http { req, res }
 
 -- | Get the request HTTP version.
 httpVersion :: Http -> String
-httpVersion (Http { req }) = HTTP.httpVersion req
+httpVersion = toRequest >>> HTTP.httpVersion
 
 -- | Get the request headers.
 requestHeaders :: Http -> Object String
-requestHeaders (Http { req }) = HTTP.requestHeaders req
+requestHeaders = toRequest >>> HTTP.requestHeaders
 
 -- | Get the request method (GET, POST, etc.).
 requestMethod :: Http -> String
-requestMethod (Http { req }) = HTTP.requestMethod req
+requestMethod = toRequest >>> HTTP.requestMethod
 
 -- | Get the request URL.
 requestURL :: Http -> String
-requestURL (Http { req }) = HTTP.requestURL req
+requestURL = toRequest >>> HTTP.requestURL
 
 -- | Get the request body.
 requestBody :: Http -> Aff String
-requestBody http = convertToString $ toReadable http
+requestBody = toReadable >>> convertToString
 
 -- | Convert a Http stream to a Readable stream.
 toReadable :: Http -> Readable ()
-toReadable (Http { req }) = HTTP.requestAsStream req
+toReadable = toRequest >>> HTTP.requestAsStream
 
 -- | Set a header with a single value.
 setHeader :: Http -> String -> String -> Effect Unit
-setHeader (Http { res }) = HTTP.setHeader res
+setHeader = toResponse >>> HTTP.setHeader
 
 -- | Set a header with multiple values.
 setHeaders :: Http -> String -> Array String -> Effect Unit
-setHeaders (Http { res }) = HTTP.setHeaders res
+setHeaders = toResponse >>> HTTP.setHeaders
 
 -- | Set the status code.
 setStatusCode :: Http -> Int -> Effect Unit
-setStatusCode (Http { res }) = HTTP.setStatusCode res
+setStatusCode = toResponse >>> HTTP.setStatusCode
 
 -- | Set the status message.
 setStatusMessage :: Http -> String -> Effect Unit
-setStatusMessage (Http { res }) = HTTP.setStatusMessage res
+setStatusMessage = toResponse >>> HTTP.setStatusMessage
 
 -- | This is for internal. Do not use it.
 toWritable :: Http -> Writable ()
-toWritable (Http { res }) = HTTP.responseAsStream res
+toWritable = toResponse >>> HTTP.responseAsStream
