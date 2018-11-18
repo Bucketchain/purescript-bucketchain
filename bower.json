@@ -5,7 +5,7 @@
   "authors": [
     "Shinya Takahashi <s.takahashi313@gmail.com>"
   ],
-  "description": "A PureScript webserver interface based on asyncronous middlewares.",
+  "description": "A PureScript webserver interface based on asynchronous middlewares.",
   "keywords": [
     "purescript",
     "webserver"
