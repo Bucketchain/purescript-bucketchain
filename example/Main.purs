@@ -14,10 +14,13 @@ import Effect.Aff.Class (liftAff)
 import Effect.Class (liftEffect)
 import Effect.Exception (error)
 import Node.FS.Stream (createReadStream)
-import Node.HTTP (ListenOptions)
+import Node.HTTP (ListenOptions, Server)
 
 main :: Effect Unit
-main = createServer middleware >>= listen opts
+main = server >>= listen opts
+
+server :: Effect Server
+server = createServer middleware
 
 opts :: ListenOptions
 opts =
