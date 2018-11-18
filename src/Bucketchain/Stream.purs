@@ -8,7 +8,7 @@ import Effect.Ref (modify_, new, read)
 import Node.Encoding (Encoding(..))
 import Node.Stream (Readable, onDataString, onEnd, onError)
 
--- | Convert a readable stream to string asynchronously.
+-- | Convert a readable stream to a string asynchronously.
 convertToString :: forall r. Readable r -> Aff String
 convertToString readable = makeAff \cb -> do
   ref <- new ""
