@@ -2,7 +2,8 @@ module Main where
 
 import Prelude
 
-import Bucketchain (Middleware, run)
+import Bucketchain (run)
+import Bucketchain.Middleware (Middleware)
 import Bucketchain.Http (requestMethod, requestURL, requestBody, setStatusCode, setHeader)
 import Bucketchain.ResponseBody (body, fromReadable)
 import Control.Monad.Error.Class (throwError)
