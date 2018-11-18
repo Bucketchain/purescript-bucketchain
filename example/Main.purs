@@ -2,7 +2,8 @@ module Main where
 
 import Prelude
 
-import Bucketchain (Middleware, run)
+import Bucketchain (createServer, listen)
+import Bucketchain.Middleware (Middleware)
 import Bucketchain.Http (requestMethod, requestURL, requestBody, setStatusCode, setHeader)
 import Bucketchain.ResponseBody (body, fromReadable)
 import Control.Monad.Error.Class (throwError)
@@ -13,10 +14,13 @@ import Effect.Aff.Class (liftAff)
 import Effect.Class (liftEffect)
 import Effect.Exception (error)
 import Node.FS.Stream (createReadStream)
-import Node.HTTP (ListenOptions)
+import Node.HTTP (ListenOptions, Server)
 
 main :: Effect Unit
-main = run opts middleware
+main = server >>= listen opts
+
+server :: Effect Server
+server = createServer middleware
 
 opts :: ListenOptions
 opts =
