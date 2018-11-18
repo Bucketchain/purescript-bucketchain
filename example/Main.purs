@@ -2,7 +2,7 @@ module Main where
 
 import Prelude
 
-import Bucketchain (run)
+import Bucketchain (createServer, listen)
 import Bucketchain.Middleware (Middleware)
 import Bucketchain.Http (requestMethod, requestURL, requestBody, setStatusCode, setHeader)
 import Bucketchain.ResponseBody (body, fromReadable)
@@ -17,7 +17,7 @@ import Node.FS.Stream (createReadStream)
 import Node.HTTP (ListenOptions)
 
 main :: Effect Unit
-main = run opts middleware
+main = createServer middleware >>= listen opts
 
 opts :: ListenOptions
 opts =
