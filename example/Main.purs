@@ -30,7 +30,7 @@ opts =
   }
 
 middleware :: Middleware
-middleware = middleware1 >>> middleware2 >>> middleware3 >>> middleware4
+middleware = middleware1 <<< middleware2 <<< middleware3 <<< middleware4
 
 middleware1 :: Middleware
 middleware1 next = do
