@@ -11,5 +11,5 @@ exports._setRequestURL = function(req) {
 }
 
 exports._requestOriginalURL = function(req) {
-  return req.originalUrl;
+  return req.originalUrl || req.url;
 }
