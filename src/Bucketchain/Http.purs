@@ -5,11 +5,13 @@ module Bucketchain.Http
   , httpVersion
   , requestHeaders
   , requestMethod
+  , requestOriginalURL
   , requestURL
   , requestBody
   , toReadable
   , setHeader
   , setHeaders
+  , setRequestURL
   , setStatusCode
   , setStatusMessage
   , toWritable
@@ -53,6 +55,10 @@ requestHeaders = toRequest >>> HTTP.requestHeaders
 requestMethod :: Http -> String
 requestMethod = toRequest >>> HTTP.requestMethod
 
+-- | Get the request original URL.
+requestOriginalURL :: Http -> String
+requestOriginalURL = toRequest >>> _requestOriginalURL
+
 -- | Get the request URL.
 requestURL :: Http -> String
 requestURL = toRequest >>> HTTP.requestURL
@@ -73,6 +79,10 @@ setHeader = toResponse >>> HTTP.setHeader
 setHeaders :: Http -> String -> Array String -> Effect Unit
 setHeaders = toResponse >>> HTTP.setHeaders
 
+-- | Set the request URL.
+setRequestURL :: Http -> String -> Effect Unit
+setRequestURL = toRequest >>> _setRequestURL
+
 -- | Set the status code.
 setStatusCode :: Http -> Int -> Effect Unit
 setStatusCode = toResponse >>> HTTP.setStatusCode
@@ -84,3 +94,7 @@ setStatusMessage = toResponse >>> HTTP.setStatusMessage
 -- | This is for internal. Do not use it.
 toWritable :: Http -> Writable ()
 toWritable = toResponse >>> HTTP.responseAsStream
+
+foreign import _setRequestURL :: HTTP.Request -> String -> Effect Unit
+
+foreign import _requestOriginalURL :: HTTP.Request -> String
