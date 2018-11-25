@@ -24,7 +24,7 @@ toReadable = unsafeCoerce
 fromReadable :: Readable () -> ResponseBody
 fromReadable = unsafeCoerce
 
--- | Get a response body stream certainly from `Maybe ResponseBody`.
+-- | This is for internal. Do not use it.
 maybeToBody :: Maybe ResponseBody -> Effect ResponseBody
 maybeToBody (Just x) = pure x
 maybeToBody Nothing = empty
