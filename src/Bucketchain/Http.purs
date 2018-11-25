@@ -9,6 +9,7 @@ module Bucketchain.Http
   , requestURL
   , requestBody
   , toReadable
+  , responseHeaders
   , setHeader
   , setHeaders
   , setRequestURL
@@ -71,6 +72,10 @@ requestBody = toReadable >>> convertToString
 toReadable :: Http -> Readable ()
 toReadable = toRequest >>> HTTP.requestAsStream
 
+-- | Get the response headers.
+responseHeaders :: Http -> Object String
+responseHeaders = toResponse >>> _responseHeaders
+
 -- | Set a header with a single value.
 setHeader :: Http -> String -> String -> Effect Unit
 setHeader = toResponse >>> HTTP.setHeader
@@ -98,3 +103,5 @@ toWritable = toResponse >>> HTTP.responseAsStream
 foreign import _setRequestURL :: HTTP.Request -> String -> Effect Unit
 
 foreign import _requestOriginalURL :: HTTP.Request -> String
+
+foreign import _responseHeaders :: HTTP.Response -> Object String

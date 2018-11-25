@@ -13,3 +13,7 @@ exports._setRequestURL = function(req) {
 exports._requestOriginalURL = function(req) {
   return req.originalUrl || req.url;
 }
+
+exports._responseHeaders = function(res) {
+  return res.getHeaders();
+}
