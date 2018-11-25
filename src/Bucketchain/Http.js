@@ -17,3 +17,7 @@ exports._requestOriginalURL = function(req) {
 exports._responseHeaders = function(res) {
   return res.getHeaders();
 }
+
+exports._statusCode = function(res) {
+  return res.statusCode;
+}

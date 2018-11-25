@@ -10,6 +10,7 @@ module Bucketchain.Http
   , requestBody
   , toReadable
   , responseHeaders
+  , statusCode
   , setHeader
   , setHeaders
   , setRequestURL
@@ -76,6 +77,10 @@ toReadable = toRequest >>> HTTP.requestAsStream
 responseHeaders :: Http -> Object String
 responseHeaders = toResponse >>> _responseHeaders
 
+-- | Get the status code.
+statusCode :: Http -> Int
+statusCode = toResponse >>> _statusCode
+
 -- | Set a header with a single value.
 setHeader :: Http -> String -> String -> Effect Unit
 setHeader = toResponse >>> HTTP.setHeader
@@ -105,3 +110,5 @@ foreign import _setRequestURL :: HTTP.Request -> String -> Effect Unit
 foreign import _requestOriginalURL :: HTTP.Request -> String
 
 foreign import _responseHeaders :: HTTP.Response -> Object String
+
+foreign import _statusCode :: HTTP.Response -> Int
