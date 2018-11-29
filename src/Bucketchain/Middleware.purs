@@ -34,7 +34,7 @@ derive newtype instance plusHandler :: Plus Handler
 derive newtype instance bindHandler :: Bind Handler
 derive newtype instance monadHandler :: Monad Handler
 derive newtype instance semigroupHandler :: Semigroup a => Semigroup (Handler a)
-derive newtype instance monoidHandler :: Monoid a => Semigroup (Handler a)
+derive newtype instance monoidHandler :: Monoid a => Monoid (Handler a)
 derive newtype instance monadEffectHandler :: MonadEffect Handler
 derive newtype instance monadAffHandler :: MonadAff Handler
 derive newtype instance monadThrowHandler :: MonadThrow Error Handler
