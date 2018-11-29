@@ -17,6 +17,7 @@ module Bucketchain.Http
   , setStatusCode
   , setStatusMessage
   , toWritable
+  , onFinish
   ) where
 
 import Prelude
@@ -27,6 +28,7 @@ import Effect.Aff (Aff)
 import Foreign.Object (Object)
 import Node.HTTP as HTTP
 import Node.Stream (Readable, Writable)
+import Node.Stream as Stream
 
 -- | The type of a HTTP stream.
 newtype Http = Http
@@ -104,6 +106,10 @@ setStatusMessage = toResponse >>> HTTP.setStatusMessage
 -- | This is for internal. Do not use it.
 toWritable :: Http -> Writable ()
 toWritable = toResponse >>> HTTP.responseAsStream
+
+-- | Listen `finish` event of a response stream.
+onFinish :: Http -> Effect Unit -> Effect Unit
+onFinish = toWritable >>> Stream.onFinish
 
 foreign import _setRequestURL :: HTTP.Request -> String -> Effect Unit
 
