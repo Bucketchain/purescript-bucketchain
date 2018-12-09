@@ -21,7 +21,7 @@ toReadable :: ResponseBody -> Readable ()
 toReadable = unsafeCoerce
 
 -- | Convert a Readable stream to a response body stream.
-fromReadable :: Readable () -> ResponseBody
+fromReadable :: forall r. Readable r -> ResponseBody
 fromReadable = unsafeCoerce
 
 -- | This is for internal. Do not use it.
