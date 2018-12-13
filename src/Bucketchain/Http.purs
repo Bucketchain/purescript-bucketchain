@@ -19,6 +19,7 @@ module Bucketchain.Http
   , setStatusCode
   , setStatusMessage
   , setCookie
+  , addVary
   , toWritable
   , onFinish
   ) where
@@ -32,6 +33,7 @@ import Effect.Aff (Aff)
 import Foreign.Object (Object)
 import Node.HTTP as HTTP
 import Node.HTTP.Cookie as Cookie
+import Node.HTTP.Vary (vary)
 import Node.Stream (Readable, Writable)
 import Node.Stream as Stream
 
@@ -119,6 +121,10 @@ setStatusMessage = toResponse >>> HTTP.setStatusMessage
 -- | Set a cookie.
 setCookie :: Http -> Cookie.Payload -> Effect Unit
 setCookie = toResponse >>> Cookie.setCookie
+
+-- | Add a header name to Vary header.
+addVary :: Http -> String -> Effect Unit
+addVary = toResponse >>> vary
 
 -- | This is for internal. Do not use it.
 toWritable :: Http -> Writable ()
