@@ -28,7 +28,8 @@
     "purescript-node-streams": "^4.0.0",
     "purescript-transformers": "^4.1.0",
     "purescript-aff": "^5.0.2",
-    "purescript-console": "^4.2.0"
+    "purescript-console": "^4.2.0",
+    "purescript-cookie": "^1.0.0"
   },
   "devDependencies": {
     "purescript-node-fs": "^5.0.0",
