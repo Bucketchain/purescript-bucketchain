@@ -8,8 +8,6 @@ module Bucketchain.Http
   , requestOriginalURL
   , requestURL
   , requestBody
-  , cookies
-  , cookie
   , toReadable
   , responseHeaders
   , statusCode
@@ -18,8 +16,6 @@ module Bucketchain.Http
   , setRequestURL
   , setStatusCode
   , setStatusMessage
-  , setCookie
-  , addVary
   , toWritable
   , onFinish
   ) where
@@ -27,13 +23,10 @@ module Bucketchain.Http
 import Prelude
 
 import Bucketchain.Stream (convertToString)
-import Data.Maybe (Maybe)
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Foreign.Object (Object)
 import Node.HTTP as HTTP
-import Node.HTTP.Cookie as Cookie
-import Node.HTTP.Vary (vary)
 import Node.Stream (Readable, Writable)
 import Node.Stream as Stream
 
@@ -78,14 +71,6 @@ requestURL = toRequest >>> HTTP.requestURL
 requestBody :: Http -> Aff String
 requestBody = toReadable >>> convertToString
 
--- | Get cookies.
-cookies :: Http -> Object String
-cookies = toRequest >>> Cookie.getCookies
-
--- | Get a cookie by key.
-cookie :: Http -> String -> Maybe String
-cookie = toRequest >>> Cookie.getCookie
-
 -- | Convert a Http stream to a Readable stream.
 toReadable :: Http -> Readable ()
 toReadable = toRequest >>> HTTP.requestAsStream
@@ -117,14 +102,6 @@ setStatusCode = toResponse >>> HTTP.setStatusCode
 -- | Set the status message.
 setStatusMessage :: Http -> String -> Effect Unit
 setStatusMessage = toResponse >>> HTTP.setStatusMessage
-
--- | Set a cookie.
-setCookie :: Http -> Cookie.Payload -> Effect Unit
-setCookie = toResponse >>> Cookie.setCookie
-
--- | Add a header name to Vary header.
-addVary :: Http -> String -> Effect Unit
-addVary = toResponse >>> vary
 
 -- | This is for internal. Do not use it.
 toWritable :: Http -> Writable ()
