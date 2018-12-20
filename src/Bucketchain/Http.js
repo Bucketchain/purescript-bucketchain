@@ -14,8 +14,16 @@ exports._requestOriginalURL = function(req) {
   return req.originalUrl || req.url;
 }
 
+exports._responseHeader = function(res) {
+  return function(name) {
+    return res.getHeader(name);
+  }
+}
+
 exports._responseHeaders = function(res) {
-  return res.getHeaders();
+  return function(name) {
+    return res.getHeader(name) || [];
+  }
 }
 
 exports._statusCode = function(res) {

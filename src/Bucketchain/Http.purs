@@ -9,6 +9,7 @@ module Bucketchain.Http
   , requestURL
   , requestBody
   , toReadable
+  , responseHeader
   , responseHeaders
   , statusCode
   , setHeader
@@ -23,6 +24,8 @@ module Bucketchain.Http
 import Prelude
 
 import Bucketchain.Stream (convertToString)
+import Data.Maybe (Maybe)
+import Data.Nullable (Nullable, toMaybe)
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Foreign.Object (Object)
@@ -75,8 +78,12 @@ requestBody = toReadable >>> convertToString
 toReadable :: Http -> Readable ()
 toReadable = toRequest >>> HTTP.requestAsStream
 
--- | Get the response headers.
-responseHeaders :: Http -> Object String
+-- | Get a response header value by header name.
+responseHeader :: Http -> String -> Maybe String
+responseHeader http = toMaybe <<< (_responseHeader $ toResponse http)
+
+-- | Get response header values by header name.
+responseHeaders :: Http -> String -> Array String
 responseHeaders = toResponse >>> _responseHeaders
 
 -- | Get the status code.
@@ -115,6 +122,8 @@ foreign import _setRequestURL :: HTTP.Request -> String -> Effect Unit
 
 foreign import _requestOriginalURL :: HTTP.Request -> String
 
-foreign import _responseHeaders :: HTTP.Response -> Object String
+foreign import _responseHeader :: HTTP.Response -> String -> Nullable String
+
+foreign import _responseHeaders :: HTTP.Response -> String -> Array String
 
 foreign import _statusCode :: HTTP.Response -> Int
