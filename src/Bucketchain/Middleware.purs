@@ -26,9 +26,9 @@ import Node.Stream (end, onError, pipe)
 -- | The type of a HTTP handler.
 newtype Handler a = Handler (ReaderT Http Aff a)
 
-derive newtype instance functorHander :: Functor Handler
-derive newtype instance applyHander :: Apply Handler
-derive newtype instance applicativeHander :: Applicative Handler
+derive newtype instance functorHandler :: Functor Handler
+derive newtype instance applyHandler :: Apply Handler
+derive newtype instance applicativeHandler :: Applicative Handler
 derive newtype instance altHandler :: Alt Handler
 derive newtype instance plusHandler :: Plus Handler
 derive newtype instance bindHandler :: Bind Handler
