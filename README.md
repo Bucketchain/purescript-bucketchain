@@ -12,8 +12,16 @@ See [simple examples](https://github.com/Bucketchain/purescript-bucketchain/blob
 
 ## Installation
 
+### Bower
+
 ```
-bower install purescript-bucketchain
+$ bower install purescript-bucketchain
+```
+
+### Spago
+
+```
+$ spago install bucketchain
 ```
 
 ## Documentation
