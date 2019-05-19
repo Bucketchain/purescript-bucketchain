@@ -8,7 +8,7 @@
 
 A PureScript webserver interface based on asynchronous middlewares.
 
-See [simple examples](https://github.com/Bucketchain/purescript-bucketchain/blob/master/example/Main.purs).
+See [simple examples](https://github.com/Bucketchain/purescript-bucketchain/blob/master/example/Main.purs) or [some middlewares](https://github.com/Bucketchain) ;)
 
 ## Installation
 
