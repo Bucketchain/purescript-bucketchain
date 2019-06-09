@@ -8,6 +8,8 @@
 
 A PureScript webserver interface based on asynchronous middlewares.
 
+This is just a interface to implement middlewares.
+
 See [simple examples](https://github.com/Bucketchain/purescript-bucketchain/blob/master/example/Main.purs) or [some middlewares](https://github.com/Bucketchain) ;)
 
 ## Installation
