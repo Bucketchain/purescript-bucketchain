@@ -1,6 +1,6 @@
 'use strict';
 
-exports._setRequestURL = function(req) {
+export function _setRequestURL(req) {
   return function(url) {
     return function() {
       req.originalUrl = req.originalUrl || req.url;
@@ -10,22 +10,22 @@ exports._setRequestURL = function(req) {
   }
 }
 
-exports._requestOriginalURL = function(req) {
+export function _requestOriginalURL(req) {
   return req.originalUrl || req.url;
 }
 
-exports._responseHeader = function(res) {
+export function _responseHeader(res) {
   return function(name) {
     return res.getHeader(name);
   }
 }
 
-exports._responseHeaders = function(res) {
+export function _responseHeaders(res) {
   return function(name) {
     return res.getHeader(name) || [];
   }
 }
 
-exports._statusCode = function(res) {
+export function _statusCode(res) {
   return res.statusCode;
 }

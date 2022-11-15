@@ -14,7 +14,7 @@ request :: Options C.RequestOptions -> Aff C.Response
 request opts = makeAff \cb -> do
   let cb' res = cb $ Right res
   req <- C.request opts cb'
-  end (C.requestAsStream req) $ pure unit
+  end (C.requestAsStream req) $ const $ pure unit
   pure nonCanceler
 
 -- | A request test helper with request body.
@@ -23,6 +23,6 @@ requestWithBody opts body = makeAff \cb -> do
   let cb' res = cb $ Right res
   req <- C.request opts cb'
   let writable = C.requestAsStream req
-  void $ writeString writable UTF8 body $ pure unit
-  end writable $ pure unit
+  void $ writeString writable UTF8 body $ const $ pure unit
+  end writable $ const $ pure unit
   pure nonCanceler

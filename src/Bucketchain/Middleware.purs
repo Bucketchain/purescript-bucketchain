@@ -71,7 +71,7 @@ handleAff http (Right x) = do
 handleAff http _ = do
   setHeader http "Content-Type" "text/plain; charset=utf-8"
   setStatusCode http 500
-  end (toWritable http) $ pure unit
+  end (toWritable http) $ const $ pure unit
 
 empty :: Handler (Maybe ResponseBody)
 empty = do
