@@ -2,13 +2,12 @@
   "private": true,
   "name": "purescript-bucketchain",
   "scripts": {
-    "postinstall": "bower i",
-    "bower": "bower",
+    "spago": "spago",
+    "watch": "spago build -w -u '--strict --stash --censor-lib --is-lib=.spago'",
     "clean": "rm -rf output",
-    "build": "pulp build",
-    "test": "pulp test --include example",
-    "start": "pulp run --include example",
-    "pulp:version": "pulp version",
+    "test": "spago -x test.dhall test -u '--strict --stash --censor-lib --is-lib=.spago'",
+    "start": "spago -x test.dhall run -u '--strict --stash --censor-lib --is-lib=.spago'",
+    "bump-version": "LC_ALL=C.UTF-8 spago bump-version --no-dry-run",
     "pulp:publish": "pulp publish",
     "pulp:login": "pulp login"
   },
@@ -16,6 +15,7 @@
     "bower": "^1.8.14",
     "pulp": "^16.0.2",
     "purescript": "^0.15.6",
-    "purescript-psa": "^0.8.2"
+    "purescript-psa": "^0.8.2",
+    "spago": "^0.20.9"
   }
 }

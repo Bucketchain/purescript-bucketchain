@@ -21,11 +21,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-npm-
 
-    - name: Cache bower modules
+    - name: Cache spago modules
       uses: actions/cache@v1
       with:
-        path: bower_components
-        key: ${{ runner.os }}-deps-${{ hashFiles('bower.json') }}
+        path: .spago
+        key: ${{ runner.os }}-deps-${{ hashFiles('packages.dhall') }}-${{ hashFiles('spago.dhall') }}-${{ hashFiles('test.dhall') }}
         restore-keys: |
           ${{ runner.os }}-deps-
 
